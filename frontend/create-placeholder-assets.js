@@ -1,0 +1,89 @@
+const fs = require("fs");
+const path = require("path");
+
+// Create a minimal valid 1x1 PNG file (smallest possible PNG)
+const pngBuffer = Buffer.from([
+  0x89,
+  0x50,
+  0x4e,
+  0x47,
+  0x0d,
+  0x0a,
+  0x1a,
+  0x0a, // PNG signature
+  0x00,
+  0x00,
+  0x00,
+  0x0d,
+  0x49,
+  0x48,
+  0x44,
+  0x52, // IHDR chunk
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01, // 1x1 dimensions
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1f,
+  0x15,
+  0xc4, // 8-bit RGBA
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0a,
+  0x49,
+  0x44,
+  0x41, // IDAT chunk
+  0x54,
+  0x78,
+  0x9c,
+  0x62,
+  0x00,
+  0x01,
+  0x00,
+  0x00, // Image data
+  0x05,
+  0x00,
+  0x01,
+  0x0d,
+  0x0a,
+  0x2d,
+  0xb4,
+  0x00, //
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4e,
+  0x44,
+  0xae, // IEND chunk
+  0x42,
+  0x60,
+  0x82,
+]);
+
+const assetsDir = path.join(__dirname, "assets");
+
+// Create placeholder images
+const files = ["icon.png", "splash.png", "adaptive-icon.png", "favicon.png"];
+
+files.forEach((file) => {
+  const filePath = path.join(assetsDir, file);
+  fs.writeFileSync(filePath, pngBuffer);
+  console.log(`✅ Created ${file}`);
+});
+
+console.log("\n🎉 All placeholder images created successfully!");
+console.log(
+  "⚠️  Remember to replace these with actual app icons before release."
+);
